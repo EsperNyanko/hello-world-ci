@@ -36,7 +36,7 @@ jobs:
       - name: Send HTTP request and check response
         run: |
           response=$(curl --silent --location --request GET 'http://localhost:5000/')
-          if echo "$response" | grep -q 'Hello, World!' が見つかりました。"
+          if echo "$response" | grep -q 'Hello, World!'; then
             echo "テスト成功: 期待したレスポンス 'Hello, World!' が見つかりました。"
           else
             echo "テスト失敗: 期待したレスポンスが見つかりませんでした。"
