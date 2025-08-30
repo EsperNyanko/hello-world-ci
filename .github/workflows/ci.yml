@@ -26,10 +26,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # アプリケーションがビルドできるかテスト（Pythonのコードチェック）
-      - name: Run a simple test
+      - name: Start Flask application
         run: |
-          python -c "import flask; print('Flask is installed!')"
+          nohup python app.py > server.log 2>&1 &
+
+      - name: Wait for the server to be ready
+        run: sleep 5 # アプリケーションが完全に起動するまで少し待つ
+
+      - name: Send HTTP request and check response
+        run: |
+          response=$(curl --silent --location --request GET 'http://localhost:5000/')
+          if echo "$response" | grep -q 'Hello, World!' が見つかりました。"
+            echo "テスト成功: 期待したレスポンス 'Hello, World!' が見つかりました。"
+          else
+            echo "テスト失敗: 期待したレスポンスが見つかりませんでした。"
+            exit 1
+          fi
           
+        
         
         
